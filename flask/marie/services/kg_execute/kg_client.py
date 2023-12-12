@@ -1,9 +1,9 @@
 from typing import Optional
-from urllib.parse import urlparse
 
 from SPARQLWrapper import SPARQLWrapper, POST, JSON
+from SPARQLWrapper.SPARQLExceptions import QueryBadFormed
 
-from marie.exceptions import InvalidUrlError
+from marie.exceptions import KgConnectionError, QueryBadFormedError
 
 
 class KgClient:
@@ -22,9 +22,6 @@ PREFIX occ: <http://www.theworldavatar.com/ontology/ontocompchem/OntoCompChem.ow
         user: Optional[str] = None,
         pw: Optional[str] = None,
     ):
-        if not isinstance(kg_endpoint, str):
-            raise InvalidUrlError(kg_endpoint)
-        
         sparql = SPARQLWrapper(kg_endpoint)
         sparql.setReturnFormat(JSON)
         if user is not None and pw is not None:
@@ -57,4 +54,9 @@ PREFIX occ: <http://www.theworldavatar.com/ontology/ontocompchem/OntoCompChem.ow
 
         self.sparql.setQuery(query)
 
-        return self.sparql.queryAndConvert()
+        try:
+            return self.sparql.queryAndConvert()
+        except QueryBadFormed as e:
+            raise QueryBadFormedError(e.args)
+        except Exception:
+            raise KgConnectionError()
