@@ -7,3 +7,4 @@ numpy
 unit_parse
 Pint
 Levenshtein
+jinja2
