@@ -469,6 +469,8 @@ async function askQuestion() {
         return;
     }
 
+    document.getElementById("result-section").style.display = "none"
+
     const question = document.getElementById("input-field").value;
     if (question === "") {
         return;
@@ -485,6 +487,8 @@ async function askQuestion() {
     try {
         const trans_results = await fetchTranslation(question)
         sparqlContainer.render(trans_results)
+        document.getElementById("result-section").style.display = "block"
+
         inferenceMetadataCard.displayTranslationMetadata({
             question,
             preprocessedQuestion: trans_results["preprocessed_question"],

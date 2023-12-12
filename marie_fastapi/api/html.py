@@ -7,8 +7,11 @@ from fastapi.templating import Jinja2Templates
 
 templates = Jinja2Templates(directory="templates")
 
-SAMPLE_QUESTIONS = json.loads(
-    files("resources").joinpath("sample_questions.json").read_text()
+CHEMISTRY_SAMPLE_QUESTIONS = json.loads(
+    files("resources.chemistry").joinpath("sample_questions.json").read_text()
+)
+CHEMISTRY_METADATA = json.loads(
+    files("resources.chemistry").joinpath("metadata.json").read_text()
 )
 
 router = APIRouter()
@@ -17,5 +20,19 @@ router = APIRouter()
 @router.get("/", response_class=HTMLResponse)
 async def home(request: Request):
     return templates.TemplateResponse(
-        "index.html", dict(request=request, sample_questions=SAMPLE_QUESTIONS)
+        "index.html",
+        dict(request=request),
+    )
+
+
+@router.get("/chemistry", response_class=HTMLResponse)
+async def chemistry(request: Request):
+    return templates.TemplateResponse(
+        "qa.html",
+        dict(
+            request=request,
+            title=CHEMISTRY_METADATA["title"],
+            subtitle=CHEMISTRY_METADATA["subtitle"],
+            sample_questions=CHEMISTRY_SAMPLE_QUESTIONS,
+        ),
     )
