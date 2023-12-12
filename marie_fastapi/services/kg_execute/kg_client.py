@@ -3,8 +3,6 @@ from typing import Optional
 from SPARQLWrapper import SPARQLWrapper, POST, JSON
 from SPARQLWrapper.SPARQLExceptions import QueryBadFormed
 
-from marie.exceptions import KgConnectionError, QueryBadFormedError
-
 
 class KgClient:
     QUERY_PREFIXES = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -53,10 +51,10 @@ PREFIX occ: <http://www.theworldavatar.com/ontology/ontocompchem/OntoCompChem.ow
             query = self.QUERY_PREFIXES + query
 
         self.sparql.setQuery(query)
-
-        try:
-            return self.sparql.queryAndConvert()
-        except QueryBadFormed as e:
-            raise QueryBadFormedError(e.args)
-        except Exception:
-            raise KgConnectionError()
+        return self.sparql.queryAndConvert()
+        # try:
+        #     return self.sparql.queryAndConvert()
+        # except QueryBadFormed as e:
+        #     raise QueryBadFormedError(e.args)
+        # except Exception:
+        #     raise KgConnectionError()

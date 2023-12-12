@@ -1,6 +1,6 @@
 import numpy as np
 
-from marie.services.translate.triton_client.feature_extraction_client import (
+from services.translate.triton_client.feature_extraction_client import (
     FeatureExtractionClient,
 )
 from .constants import (

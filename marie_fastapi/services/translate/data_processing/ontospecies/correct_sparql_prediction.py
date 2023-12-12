@@ -1,5 +1,5 @@
-from marie.services.translate.sparql import SparqlQuery
-from marie.services.translate.sparql.graph_pattern import TriplePattern, ValuesClause
+from services.translate.sparql import SparqlQuery
+from services.translate.sparql.graph_pattern import TriplePattern, ValuesClause
 from .correct_predicate import OSPredicateCorrector
 from .correct_span import OSSpanCorrector
 

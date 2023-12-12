@@ -1,9 +1,7 @@
 import logging
 import os
 
-from flask import g
 
-from marie.exceptions import KgConnectionError
 from .kg_client import KgClient
 
 
@@ -17,7 +15,7 @@ class MissingKgEndpointError(Exception):
 
 class KgExecutor:
     def __init__(self):
-        try:
+        # try:
             ontospecies_endpoint = os.getenv("ONTOSPECIES_ENDPOINT")
             if ontospecies_endpoint is None:
                 raise MissingKgEndpointError("OntoSpecies")
@@ -51,8 +49,8 @@ class KgExecutor:
                 ontokin=ontokin_client,
                 ontocompchem=ontocompchem_client,
             )
-        except MissingKgEndpointError:
-            raise KgConnectionError()
+        # except MissingKgEndpointError:
+        #     raise KgConnectionError()
 
 
     def get_domains(self):
@@ -61,9 +59,3 @@ class KgExecutor:
     def query(self, domain: str, query: str):
         # TODO: align predicted domain to actual domain based on Levenshtein distance
         return self.domain2sparql[domain].query(query)
-
-
-def get_kg():
-    if "kg" not in g:
-        g.kg = KgExecutor()
-    return g.kg
