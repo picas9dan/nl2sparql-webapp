@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 
-@router.post("/")
+@router.post("")
 async def query(req: SparqlRequest):
     logger.info(
         "Received request to KG execution endpoint with the following request body"

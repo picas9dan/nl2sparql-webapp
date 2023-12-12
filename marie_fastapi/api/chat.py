@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 
-@router.post("/")
+@router.post("")
 async def chat(req: ChatRequest):
     logger.info("Request received to chat endpoint with the following request body")
     logger.info(req)
