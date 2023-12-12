@@ -49,52 +49,53 @@
     <main id="body-wrapper">
         <div class="container grid-lg">
             {% block body %}{% endblock %}
-
-            <div style="margin-top: 2rem; padding-top: 10px; border-top: 1px solid LightGrey;">
-                This content was developed, tested, and documented by the following commercial and academic
-                partners. For more information on each institution, please follow the links listed below.
-
-                <table class="partner-table" style="padding-top: 10px;">
-                    <tr>
-                        <td width="33%">
-                            <a href="https://cmclinnovations.com" markdown="1">
-                                <img src="/static/img/cmcl.svg" width="100" class="animate__animated animate__fadeIn">
-                            </a>
-                        </td>
-                        <td width="33%">
-                            <a href="https://como.ceb.cam.ac.uk" markdown="1">
-                                <img src="http://kg.cmclinnovations.com/user/images/como-logo.png" width="85"
-                                    class="animate__animated animate__fadeIn">
-                            </a>
-                        </td>
-                        <td width="33%">
-                            <a href="https://cares.cam.ac.uk" markdown="1">
-                                <img src="http://kg.cmclinnovations.com/user/images/cares-logo.png" width="100"
-                                    class="animate__animated animate__fadeIn">
-                            </a>
-                        </td>
-                    </tr>
-                    <tr style="font-size: 80%;">
-                        <td width="33%">
-                            CMCL Innovations<br>
-                            <a href="https://cmclinnovations.com">cmclinnovations.com</a>
-                        </td>
-                        <td width="33%">
-                            Computational Modelling Group<br>
-                            <a href="https://como.ceb.cam.ac.uk">como.ceb.cam.ac.uk</a>
-                        </td>
-                        <td width="33%">
-                            Cambridge CARES<br>
-                            <a href="https://cares.cam.ac.uk">cares.cam.ac.uk</a>
-                        </td>
-                    </tr>
-                </table>
-            </div>
         </div>
     </main>
 
-    <footer id="footer" class="footer">
-        <p style="font-size: 75%;">All Rights Reserved.</p>
+    <footer id="footer" style="margin-top: 2rem; padding-top: 10px; border-top: 1px solid LightGrey;">
+        <div class="three-quarter-width">
+            <p>This content was developed, tested, and documented by the following commercial and academic
+            partners. For more information on each institution, please follow the links listed below.</p>
+
+            <table class="partner-table" style="padding-top: 10px;">
+                <tr>
+                    <td width="33%">
+                        <a href="https://cmclinnovations.com" markdown="1">
+                            <img src="/static/img/cmcl.svg" width="100" class="animate__animated animate__fadeIn">
+                        </a>
+                    </td>
+                    <td width="33%">
+                        <a href="https://como.ceb.cam.ac.uk" markdown="1">
+                            <img src="http://kg.cmclinnovations.com/user/images/como-logo.png" width="85"
+                                class="animate__animated animate__fadeIn">
+                        </a>
+                    </td>
+                    <td width="33%">
+                        <a href="https://cares.cam.ac.uk" markdown="1">
+                            <img src="http://kg.cmclinnovations.com/user/images/cares-logo.png" width="100"
+                                class="animate__animated animate__fadeIn">
+                        </a>
+                    </td>
+                </tr>
+                <tr style="font-size: 80%;">
+                    <td width="33%">
+                        <span>CMCL Innovations</span><br>
+                        <a href="https://cmclinnovations.com">cmclinnovations.com</a>
+                    </td>
+                    <td width="33%">
+                        <span>Computational Modelling Group</span><br>
+                        <a href="https://como.ceb.cam.ac.uk">como.ceb.cam.ac.uk</a>
+                    </td>
+                    <td width="33%">
+                        <span>Cambridge CARES</span><br>
+                        <a href="https://cares.cam.ac.uk">cares.cam.ac.uk</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="all-rights-reserved">
+            All Rights Reserved.
+        </div>
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
