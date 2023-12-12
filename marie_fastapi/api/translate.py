@@ -28,11 +28,11 @@ router = APIRouter()
 
 
 @router.post("/")
-def translate(trans_req: TranslateRequest):
+def translate(req: TranslateRequest):
     print("Received request to translation endpoint with the following request body")
-    print(trans_req)
+    print(req)
 
-    sanitized_inputs = sanitize_quantities(trans_req.question)
+    sanitized_inputs = sanitize_quantities(req.question)
     print("Santized inputs: " + str(sanitized_inputs))
 
     print("Sending translation request to triton server")
@@ -46,7 +46,7 @@ def translate(trans_req: TranslateRequest):
     print("Translation result: " + str(translation_result))
 
     return TranslateResponse(
-        question=trans_req.question,
+        question=req.question,
         preprocessed_question=sanitized_inputs["preprocessed_text_for_user"],
         domain=translation_result["domain"],
         sparql=TranslateResponseSparql(
