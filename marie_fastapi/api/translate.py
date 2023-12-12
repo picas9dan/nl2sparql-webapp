@@ -8,7 +8,6 @@ from services.translate import MultiDomainTranslator
 
 class TranslateRequest(BaseModel):
     question: str
-    domain: str
 
 
 class TranslateResponseSparql(BaseModel):
