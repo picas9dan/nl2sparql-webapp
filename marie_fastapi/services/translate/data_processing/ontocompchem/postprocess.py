@@ -1,6 +1,6 @@
 from .compact2verbose import OCCSparqlCompact2VerboseConverter
-from marie.services.translate.data_processing.postprocess import PostProcessor
-from marie.services.translate.sparql import SparqlQuery
+from services.translate.data_processing.postprocess import PostProcessor
+from services.translate.sparql import SparqlQuery
 
 
 class OCCPostProcessor(PostProcessor):

@@ -1,8 +1,8 @@
 from typing import List
 
-from marie.services.translate.sparql import SparqlQuery
-from marie.services.translate.sparql.query_form import SelectClause
-from marie.services.translate.sparql.graph_pattern import (
+from services.translate.sparql import SparqlQuery
+from services.translate.sparql.query_form import SelectClause
+from services.translate.sparql.graph_pattern import (
     BindClause,
     GraphPattern,
     OptionalClause,

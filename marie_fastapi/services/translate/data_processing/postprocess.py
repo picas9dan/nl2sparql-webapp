@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from marie.services.translate.sparql import SparqlQuery
+from services.translate.sparql import SparqlQuery
 
 
 class PostProcessor(ABC):
