@@ -1,3 +1,4 @@
+import logging
 import time
 from fastapi import APIRouter
 from pydantic import BaseModel
@@ -23,18 +24,22 @@ class TranslateResponse(BaseModel):
     latency: float
 
 
+logger = logging.getLogger(__name__)
+
 router = APIRouter()
 
 
 @router.post("/")
 def translate(req: TranslateRequest):
-    print("Received request to translation endpoint with the following request body")
-    print(req)
+    logger.info(
+        "Received request to translation endpoint with the following request body"
+    )
+    logger.info(req)
 
     sanitized_inputs = sanitize_quantities(req.question)
-    print("Santized inputs: " + str(sanitized_inputs))
+    logger.info("Santized inputs: " + str(sanitized_inputs))
 
-    print("Sending translation request to triton server")
+    logger.info("Sending translation request to triton server")
     translator = MultiDomainTranslator()
     start = time.time()
     translation_result = translator.nl2sparql(
@@ -42,7 +47,7 @@ def translate(req: TranslateRequest):
     )
     end = time.time()
 
-    print("Translation result: " + str(translation_result))
+    logger.info("Translation result: " + str(translation_result))
 
     return TranslateResponse(
         question=req.question,

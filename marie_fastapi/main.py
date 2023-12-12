@@ -8,7 +8,9 @@ from fastapi.templating import Jinja2Templates
 
 from api import translate, sparql, chat
 
-logger = logging.getLogger(__name__)
+
+logging.root.setLevel(logging.DEBUG)
+
 app = FastAPI()
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
