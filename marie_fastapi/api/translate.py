@@ -29,7 +29,7 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 
-@router.post("/")
+@router.post("")
 def translate(req: TranslateRequest):
     logger.info(
         "Received request to translation endpoint with the following request body"
