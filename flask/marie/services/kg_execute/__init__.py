@@ -3,11 +3,16 @@ import os
 
 from flask import g
 
-from marie.exceptions import KgConnectionError, MissingKgEndpointError
+from marie.exceptions import KgConnectionError
 from .kg_client import KgClient
 
 
 logger = logging.getLogger(__name__)
+
+
+class MissingKgEndpointError(Exception):
+    def __init__(self, kg: str):
+        super().__init__("Missing endpoint for {kg}.".format(kg=kg))
 
 
 class KgExecutor:

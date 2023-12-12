@@ -18,7 +18,6 @@ SAMPLE_QUESTIONS = json.loads(
 )
 app = Flask(__name__)
 
-
 translator = MultiDomainTranslator()
 
 CHATBOT_ENDPOINT = os.getenv("CHATBOT_ENDPOINT", "http://localhost:8001/v1")
