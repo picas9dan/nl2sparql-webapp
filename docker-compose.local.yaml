@@ -17,12 +17,10 @@ services:
       - chatbot-variables.env
     ports:
       - 8001:8000
-  flask:
+  fastapi:
     build:
-      context: flask
+      context: marie_fastapi
     env_file:
       - flask-variables.env
     ports:
-      - 5000:5000
-    depends_on:
-      - triton
+      - 5000:8000
