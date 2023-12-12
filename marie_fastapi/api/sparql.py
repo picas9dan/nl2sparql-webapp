@@ -1,3 +1,4 @@
+import logging
 import time
 from fastapi import APIRouter
 from pydantic import BaseModel
@@ -15,17 +16,23 @@ class SparqlResponse(BaseModel):
     latency: float
 
 
+logger = logging.getLogger(__name__)
+
 router = APIRouter()
 
 
 @router.post("/")
 async def query(req: SparqlRequest):
-    print("Received request to KG execution endpoint with the following request body")
-    print(req)
+    logger.info(
+        "Received request to KG execution endpoint with the following request body"
+    )
+    logger.info(req)
 
     kg_executor = KgExecutor()
+    logger.info("Sending query to KG")
     start = time.time()
     data = kg_executor.query(domain=req.domain, query=req.query)
     end = time.time()
+    logger.info("Results from KG received")
 
     return SparqlResponse(data=data, latency=end - start)

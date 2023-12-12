@@ -1,4 +1,5 @@
 import json
+import logging
 import os
 import time
 from fastapi import APIRouter
@@ -12,16 +13,18 @@ class ChatRequest(BaseModel):
     data: str
 
 
+logger = logging.getLogger(__name__)
+
 router = APIRouter()
 
 
 @router.post("/")
 async def chat(req: ChatRequest):
-    print("Request received to chat endpoint with the following request body")
-    print(req)
+    logger.info("Request received to chat endpoint with the following request body")
+    logger.info(req)
 
     CHATBOT_ENDPOINT = os.getenv("CHATBOT_ENDPOINT", "http://localhost:8001/v1")
-    print("Connecting to chatbot at endpoint: " + CHATBOT_ENDPOINT)
+    logger.info("Connecting to chatbot at endpoint: " + CHATBOT_ENDPOINT)
     chatbot_client = OpenAI(base_url=CHATBOT_ENDPOINT, api_key="placeholder")
 
     def make_chatbot_response_stream(question: str, data: str):
