@@ -1,7 +1,6 @@
 from typing import Optional
 
 from SPARQLWrapper import SPARQLWrapper, POST, JSON
-from SPARQLWrapper.SPARQLExceptions import QueryBadFormed
 
 
 class KgClient:
@@ -28,33 +27,8 @@ PREFIX occ: <http://www.theworldavatar.com/ontology/ontocompchem/OntoCompChem.ow
         self.sparql = sparql
 
     def query(self, query: str):
-        """Queries the KG and returns the response with the following format
-        {
-            "head": {
-                "vars": List[str]
-            },
-            "results": {
-                "bindings": [
-                    Dict[
-                        str,
-                        {
-                            "datatype": NotRequired[str],
-                            "type": str
-                            "value" str
-                        }
-                    ]
-                ]
-            }
-        }
-        """
         if not query.startswith("PREFIX"):
             query = self.QUERY_PREFIXES + query
 
         self.sparql.setQuery(query)
         return self.sparql.queryAndConvert()
-        # try:
-        #     return self.sparql.queryAndConvert()
-        # except QueryBadFormed as e:
-        #     raise QueryBadFormedError(e.args)
-        # except Exception:
-        #     raise KgConnectionError()

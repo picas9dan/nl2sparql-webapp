@@ -3,7 +3,7 @@ import time
 from fastapi import APIRouter
 from pydantic import BaseModel
 
-from services.preprocessing import sanitize_quantities
+from services.preprocessing import preprocess_text
 from services.translate import MultiDomainTranslator
 
 
@@ -36,26 +36,24 @@ def translate(req: TranslateRequest):
     )
     logger.info(req)
 
-    sanitized_inputs = sanitize_quantities(req.question)
-    logger.info("Santized inputs: " + str(sanitized_inputs))
+    preprocessed_text = preprocess_text(req.question)
+    logger.info("Preprocessed text: " + str(preprocessed_text))
 
     logger.info("Sending translation request to triton server")
     translator = MultiDomainTranslator()
     start = time.time()
-    translation_result = translator.nl2sparql(
-        sanitized_inputs["preprocessed_text_for_trans"]
-    )
+    translation_result = translator.nl2sparql(preprocessed_text.for_trans)
     end = time.time()
 
     logger.info("Translation result: " + str(translation_result))
 
     return TranslateResponse(
         question=req.question,
-        preprocessed_question=sanitized_inputs["preprocessed_text_for_user"],
-        domain=translation_result["domain"],
+        preprocessed_question=preprocessed_text.for_user,
+        domain=translation_result.domain,
         sparql=TranslateResponseSparql(
-            predicted=translation_result["sparql"]["decoded"],
-            postprocessed=translation_result["sparql"]["verbose"],
+            predicted=translation_result.sparql.decoded,
+            postprocessed=translation_result.sparql.verbose,
         ),
         latency=end - start,
     )

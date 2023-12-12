@@ -1,4 +1,6 @@
-from typing import Dict
+from dataclasses import dataclass
+import logging
+from typing import Dict, Optional
 
 from .data_processing.constants import T5_PREFIX_DOMAINCLS, T5_PREFIX_NL2SPARQL
 from .data_processing.nl import preprocess_nl
@@ -9,6 +11,22 @@ from .data_processing.postprocess import PostProcessor
 from .data_processing.sparql import postprocess_sparql
 from .sparql import SparqlQuery
 from .triton_client.seq2seq_client import Seq2SeqClient
+
+
+@dataclass
+class TranslateResultSparql:
+    raw: str
+    decoded: str
+    verbose: Optional[str]
+
+
+@dataclass
+class TranslateResult:
+    domain: str
+    sparql: TranslateResultSparql
+
+
+logger = logging.getLogger(__name__)
 
 
 class MultiDomainTranslator:
@@ -34,12 +52,12 @@ class MultiDomainTranslator:
             )
             pred_verbose_str = str(pred_verbose)
         except Exception as e:
-            print(e)
+            logger.error(e)
             pred_verbose_str = None
 
-        return dict(
+        return TranslateResult(
             domain=domain,
-            sparql=dict(
+            sparql=TranslateResultSparql(
                 raw=pred_raw,
                 decoded=pred_decoded,
                 verbose=pred_verbose_str,
