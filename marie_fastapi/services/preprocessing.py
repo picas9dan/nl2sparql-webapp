@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from unit_parse import parser
 from pint import Quantity
 
@@ -109,7 +110,23 @@ def advance_to_magnitude(text: str, ptr: int = 0):
     return ptr
 
 
-def sanitize_quantities(text: str):
+@dataclass
+class PreprocessedText:
+    for_user: str
+    for_trans: str
+
+
+def preprocess_text(text: str):
+    """Converts any physical quantities to SI units.
+
+    Args:
+        text: The input string.
+
+    Returns:
+        A `PreprocessedText` object whose fields are
+            `for_user`: both magnitude and SI units are included,
+            `for_trans`: only magnitude is included.
+    """
     ptr = advance_to_magnitude(text)
     if ptr >= len(text):
         preprocessed_text_for_user = str(text)
@@ -149,7 +166,8 @@ def sanitize_quantities(text: str):
                     text_for_trans = str(quantity_converted.magnitude)
             else:  # [[quantity, condition], [quantity, condition], ...]
                 # This is not expected to happen because we parse a text segment with a single quantity
-                raise Exception("Unexpected parsed results")
+                # raise Exception("Unexpected parsed results")
+                return PreprocessedText("", "")
 
             text_segments_for_user.append(text_for_user)
             text_segments_for_trans.append(text_for_trans)
@@ -162,7 +180,7 @@ def sanitize_quantities(text: str):
         preprocessed_text_for_user = "".join(text_segments_for_user)
         preprocessed_text_for_trans = "".join(text_segments_for_trans)
 
-    return dict(
-        preprocessed_text_for_user=preprocessed_text_for_user,
-        preprocessed_text_for_trans=preprocessed_text_for_trans,
+    return PreprocessedText(
+        for_user=preprocessed_text_for_user,
+        for_trans=preprocessed_text_for_trans,
     )

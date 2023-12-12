@@ -39,20 +39,21 @@ class SparqlQuery(SparqlBase):
         )
 
     @classmethod
-    def _extract_select_clause(cls, sparql_compact: str):
-        """sparql_compact: SELECT ?x WHERE {graph_patterns...}"""
-        sparql_compact = sparql_compact.strip()
-        select_clause, sparql_compact = sparql_compact.split("WHERE", maxsplit=1)
+    def _extract_select_clause(cls, sparql: str):
+        """SELECT ?x WHERE {graph_patterns...}"""
+        sparql = sparql.strip()
+        assert "WHERE" in sparql
+        select_clause, sparql = sparql.split("WHERE", maxsplit=1)
         select_clause = select_clause.strip()
 
         assert select_clause.startswith("SELECT")
         vars = select_clause[len("SELECT") :].strip().split()
         select_clause = SelectClause(vars)
 
-        sparql_compact = sparql_compact.strip()
-        assert sparql_compact.startswith("{"), sparql_compact
-        assert sparql_compact.endswith("}"), sparql_compact
-        graph_patterns_str = sparql_compact[1:-1]
+        sparql = sparql.strip()
+        assert sparql.startswith("{"), sparql
+        assert sparql.endswith("}"), sparql
+        graph_patterns_str = sparql[1:-1]
 
         return select_clause, graph_patterns_str
 
@@ -154,8 +155,9 @@ class SparqlQuery(SparqlBase):
         return graph_patterns_str, triple_pattern
 
     @classmethod
-    def fromstring(cls, sparql_compact: str):
-        select_clause, graph_patterns_str = cls._extract_select_clause(sparql_compact)
+    def fromstring(cls, sparql: str):
+        """Parses a SPARQL string to a `SparqlQuery` object."""
+        select_clause, graph_patterns_str = cls._extract_select_clause(sparql)
 
         graph_patterns = []
         while len(graph_patterns_str) > 0:

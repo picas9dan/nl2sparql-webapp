@@ -34,7 +34,7 @@ async def chat(req: ChatRequest):
             messages=[
                 {
                     "role": "system",
-                    "content": "You are a chatbot that concisely responds to user queries.",
+                    "content": "You are a chatbot that succinctly responds to user queries.",
                 },
                 {
                     "role": "user",
