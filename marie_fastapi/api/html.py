@@ -20,14 +20,6 @@ router = APIRouter()
 @router.get("/", response_class=HTMLResponse)
 async def home(request: Request):
     return templates.TemplateResponse(
-        "index.html",
-        dict(request=request),
-    )
-
-
-@router.get("/chemistry", response_class=HTMLResponse)
-async def chemistry(request: Request):
-    return templates.TemplateResponse(
         "qa.html",
         dict(
             request=request,
