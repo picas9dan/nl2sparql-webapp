@@ -4,5 +4,4 @@ WORKDIR /code
 COPY . /code
 RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
-ENTRYPOINT ["uvicorn"]
-CMD ["main:app", "--host=0.0.0.0", "--log-config=/code/log_conf.yaml", "--workers=4"]
+CMD uvicorn main:app --host=0.0.0.0 --root-path ${ROOT_PATH}  --log-config /code/log_conf.yaml --workers 4
