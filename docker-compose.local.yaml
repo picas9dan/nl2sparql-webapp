@@ -21,6 +21,6 @@ services:
     build:
       context: marie_fastapi
     env_file:
-      - flask-variables.env
+      - fastapi-variables.env
     ports:
       - 5000:8000
