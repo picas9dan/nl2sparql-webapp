@@ -66,7 +66,7 @@ async function throwErrorIfNotOk(res) {
 }
 
 async function fetchTranslation(question) {
-    return fetch("/translate", {
+    return fetch("./translate", {
         method: "POST",
         headers: {
             "Accept": "application/json",
@@ -79,7 +79,7 @@ async function fetchTranslation(question) {
 }
 
 async function fetchKgResults(domain, query) {
-    return fetch("/sparql", {
+    return fetch("./sparql", {
         method: "POST",
         headers: {
             "Accept": "application/json",
