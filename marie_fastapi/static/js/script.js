@@ -382,7 +382,7 @@ const chatbotResponseCard = (function () {
             return obj
         }, {}))
 
-        return fetch("/chat", {
+        return fetch("./chat", {
             method: "POST",
             headers: {
                 "Accept": "application/json",
