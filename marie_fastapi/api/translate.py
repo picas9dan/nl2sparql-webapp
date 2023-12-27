@@ -1,10 +1,11 @@
 import logging
 import time
+from typing import Optional
 from fastapi import APIRouter
 from pydantic import BaseModel
 
 from services.preprocessing import preprocess_text
-from services.translate import MultiDomainTranslator
+from services.translate import Translator
 
 
 class TranslateRequest(BaseModel):
@@ -13,7 +14,7 @@ class TranslateRequest(BaseModel):
 
 class TranslateResponseSparql(BaseModel):
     predicted: str
-    postprocessed: str
+    postprocessed: Optional[str]
 
 
 class TranslateResponse(BaseModel):
@@ -40,7 +41,7 @@ def translate(req: TranslateRequest):
     logger.info("Preprocessed text: " + str(preprocessed_text))
 
     logger.info("Sending translation request to triton server")
-    translator = MultiDomainTranslator()
+    translator = Translator()
     start = time.time()
     translation_result = translator.nl2sparql(preprocessed_text.for_trans)
     end = time.time()

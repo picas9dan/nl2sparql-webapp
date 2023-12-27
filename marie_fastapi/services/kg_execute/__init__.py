@@ -37,10 +37,18 @@ class KgExecutor:
         )
         ontocompchem_client = KgClient(ontocompchem_endpoint)
 
+        kingslynn_endpoint = os.getenv("KINGSLYNN_ENDPOINT")
+        logger.info(
+            "Initialize KG client for King's Lynn with the endpoint " +
+            ontocompchem_endpoint,
+        )
+        kingslynn_client = KgClient(kingslynn_endpoint)
+
         self.domain2sparql = dict(
             ontospecies=ontospecies_client,
             ontokin=ontokin_client,
             ontocompchem=ontocompchem_client,
+            kingslynn=kingslynn_client
         )
 
 
