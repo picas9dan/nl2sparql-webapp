@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 import logging
+import os
 from typing import Dict, Optional
 
 from .data_processing.constants import T5_PREFIX_DOMAINCLS, T5_PREFIX_NL2SPARQL
@@ -7,6 +8,7 @@ from .data_processing.nl import preprocess_nl
 from .data_processing.ontokin.postprocess import OKPostProcessor
 from .data_processing.ontospecies.postprocess import OSPostProcessor
 from .data_processing.ontocompchem.postprocess import OCCPostProcessor
+from .data_processing.ontobuiltenv.postprocess import OBEPostProcessor
 from .data_processing.postprocess import PostProcessor
 from .data_processing.sparql import postprocess_sparql
 from .sparql import SparqlQuery
@@ -29,19 +31,26 @@ class TranslateResult:
 logger = logging.getLogger(__name__)
 
 
-class MultiDomainTranslator:
+class Translator:
     def __init__(self):
+        self.domain = os.getenv("QA_DOMAIN")
         self.model = Seq2SeqClient()
         self.domain2postprocessor: Dict[str, PostProcessor] = dict(
             ontospecies=OSPostProcessor(),
             ontokin=OKPostProcessor(),
             ontocompchem=OCCPostProcessor(),
+            kingslynn=OBEPostProcessor()
         )
+
+    def get_domain(self, question: str):
+        if self.domain is not None:
+            return self.domain
+        return self.model.forward(T5_PREFIX_DOMAINCLS + question)
 
     def nl2sparql(self, question: str):
         question_encoded = preprocess_nl(question)
 
-        domain = self.model.forward(T5_PREFIX_DOMAINCLS + question_encoded)
+        domain = self.get_domain(question_encoded)
         pred_raw = self.model.forward(T5_PREFIX_NL2SPARQL + question_encoded)
         pred_decoded = postprocess_sparql(pred_raw)
 
@@ -52,7 +61,7 @@ class MultiDomainTranslator:
             )
             pred_verbose_str = str(pred_verbose)
         except Exception as e:
-            logger.error(e)
+            logger.error(e, exc_info=True)
             pred_verbose_str = None
 
         return TranslateResult(

@@ -2,12 +2,7 @@
 
 ## Local setup 
 
-1. Create a virtual environment for dependency management and activate it.
-
-   ```
-   python3 -m venv .venv
-   source .venv/bin/activate
-   ```
+1. Create a virtual environment for dependency management (e.g. venv, conda) and activate it.
 
 1. Install dependencies `pip install -r requirements.txt`.
 
