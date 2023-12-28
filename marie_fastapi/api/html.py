@@ -28,14 +28,14 @@ router = APIRouter()
 
 @router.get("/", response_class=HTMLResponse)
 async def home(request: Request):
-    domain = os.getenv("QA_SUPERDOMAIN", "chemistry")
+    superdomain = os.getenv("QA_SUPERDOMAIN", "chemistry")
 
     return templates.TemplateResponse(
         "qa.html",
         dict(
             request=request,
-            title=METADATA[domain]["title"],
-            subtitle=METADATA[domain]["subtitle"],
-            sample_questions=SAMPLE_QUESTIONS[domain],
+            superdomain=superdomain,
+            metadata=METADATA,
+            sample_questions=SAMPLE_QUESTIONS,
         ),
     )
