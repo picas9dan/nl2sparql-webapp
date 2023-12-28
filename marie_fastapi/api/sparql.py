@@ -23,6 +23,9 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 
+kg_executor = KgExecutor()
+
+
 @router.post("")
 async def query(req: SparqlRequest):
     logger.info(
@@ -30,7 +33,6 @@ async def query(req: SparqlRequest):
     )
     logger.info(req)
 
-    kg_executor = KgExecutor()
     logger.info("Sending query to KG")
     start = time.time()
     try:

@@ -1,10 +1,13 @@
 import logging
+import os
 import time
 from typing import Optional
+
 from fastapi import APIRouter
 from pydantic import BaseModel
 
-from services.preprocessing import preprocess_text
+from services.preprocess.identity import IdentityPreprocessor
+from services.preprocess.chemistry import ChemistryPreprocessor
 from services.translate import Translator
 
 
@@ -30,6 +33,15 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 
+translator = Translator()
+
+superdomain = os.getenv("QA_SUPERDOMAIN", "chemistry")
+if superdomain == "chemistry":
+    preprocessor = ChemistryPreprocessor()
+else:
+    preprocessor = IdentityPreprocessor()
+
+
 @router.post("")
 def translate(req: TranslateRequest):
     logger.info(
@@ -37,11 +49,10 @@ def translate(req: TranslateRequest):
     )
     logger.info(req)
 
-    preprocessed_text = preprocess_text(req.question)
+    preprocessed_text = preprocessor.preprocess(req.question)
     logger.info("Preprocessed text: " + str(preprocessed_text))
 
     logger.info("Sending translation request to triton server")
-    translator = Translator()
     start = time.time()
     translation_result = translator.nl2sparql(preprocessed_text.for_trans)
     end = time.time()
