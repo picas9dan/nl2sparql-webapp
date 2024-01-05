@@ -19,7 +19,7 @@ services:
     #   - 8001:8000
   fastapi:
     build:
-      context: marie_fastapi
+      context: fastapi_app
     env_file:
       - fastapi-variables.env
     ports:
