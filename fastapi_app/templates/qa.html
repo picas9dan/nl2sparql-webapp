@@ -5,11 +5,15 @@
 {% block body %}
 <section class="intro-container three-quarter-width">
     <div class="intro-left">
+        {% if superdomain == "chemistry" %}
         <video width="175" height="250" poster="https://kg.cmclinnovations.com/user/images/marie/marie-thumbnail.jpg"
             controls="controls">
             <source src="https://kg.cmclinnovations.com/user/videos/animated-marie.mp4" type="video/mp4">
             </source>
         </video>
+        {% elif superdomain == "cities" %}
+        <img style="width: 175px; height: 250px; box-shadow: none; object-fit: cover;" src="./static/img/zaha.png" />
+        {% endif %}
     </div>
     <div class="intro-center">
         <h2>{{ metadata[superdomain]["title"] }}</h2>
