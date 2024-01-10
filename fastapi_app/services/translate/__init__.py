@@ -43,7 +43,7 @@ class Translator:
         )
 
     def get_domain(self, question: str):
-        if self.domain is not None:
+        if self.domain:
             return self.domain
         return self.model.forward(T5_PREFIX_DOMAINCLS + question)
 
