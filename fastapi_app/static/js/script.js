@@ -353,15 +353,22 @@ const chatbotResponseCard = (function () {
             // Otherwise do something here to process current chunk
             value = value.trim()
             if (value.startsWith("data: ")) {
-                value = value.substring("data: ".length)
+                const msg = value.substring("data: ".length)
+                let datum = null
+                try {
+                    datum = JSON.parse(msg)
+                } catch (err) {
+                    console.log("Unexpected data received from streaming server:\n".concat(msg))
+                }
+                
+                if (datum !== null) {
+                    chatbotResponsePara.innerHTML += datum["content"]
+                    if (/\s/.test(chatbotResponsePara.innerHTML.charAt(0))) {
+                        chatbotResponsePara.innerHTML = chatbotResponsePara.innerHTML.trimStart()
+                    }
+                    globalState.set("chatbotLatency", datum["latency"])
+                }
             }
-            datum = JSON.parse(value)
-
-            chatbotResponsePara.innerHTML += datum["content"]
-            if (/\s/.test(chatbotResponsePara.innerHTML.charAt(0))) {
-                chatbotResponsePara.innerHTML = chatbotResponsePara.innerHTML.trimStart()
-            }
-            globalState.set("chatbotLatency", datum["latency"])
 
             if (streamInterrupted) {
                 return reader.cancel()
