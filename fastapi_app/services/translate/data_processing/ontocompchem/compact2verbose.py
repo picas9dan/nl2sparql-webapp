@@ -4,7 +4,7 @@ from services.translate.sparql.graph_pattern import (
     GraphPattern,
     TriplePattern,
 )
-
+from services.translate.sparql.where_clause import WhereClause
 
 class OCCSparqlCompact2VerboseConverter:
     def _try_convert_molcomp_hasresult_triple(self, pattern: GraphPattern):
@@ -135,10 +135,10 @@ class OCCSparqlCompact2VerboseConverter:
             "occ:hasMethodology/occ:hasLevelOfTheory/rdfs:label",
             "?LevelOfTheoryLabel"
         )
-        if leveloftheory_pattern not in sparql_compact.graph_patterns:
+        if leveloftheory_pattern not in sparql_compact.where_clause.graph_patterns:
             graph_patterns_verbose.append(leveloftheory_pattern)
 
-        for pattern in reversed(sparql_compact.graph_patterns):
+        for pattern in reversed(sparql_compact.where_clause.graph_patterns):
             optional = self._try_convert_molcomp_hasresult_triple(pattern)
             if optional is not None:
                 patterns, select_vars = optional
@@ -152,5 +152,6 @@ class OCCSparqlCompact2VerboseConverter:
             select_clause=SelectClause(
                 solution_modifier="DISTINCT", vars=select_vars_verbose
             ),
-            graph_patterns=graph_patterns_verbose,
+            where_clause=WhereClause(graph_patterns_verbose),
+            solultion_modifier=sparql_compact.solultion_modifier
         )
