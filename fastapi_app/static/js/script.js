@@ -4,7 +4,7 @@ Constants
 ------------------------------
 */
 
-TWA_ABOX_IRI_PREFIX = "http://www.theworldavatar.com/kb/"
+TWA_ABOX_IRI_PREFIXES = ["http://www.theworldavatar.com/kb/", "https://www.theworldavatar.com/kg/"]
 
 /* 
 ------------------------------
@@ -260,7 +260,7 @@ const kgResponseContainer = (function () {
         isShowingIRI = !isShowingIRI
         const rowData = table.row(0).data()
         const IRIcolIdx = rowData.reduce((arr, val, idx) => {
-            if (val.startsWith(TWA_ABOX_IRI_PREFIX)) {
+            if (TWA_ABOX_IRI_PREFIXES.some(prefix => val.startsWith(prefix))) {
                 arr.push(idx)
             }
             return arr
@@ -360,7 +360,7 @@ const chatbotResponseCard = (function () {
                 } catch (err) {
                     console.log("Unexpected data received from streaming server:\n".concat(msg))
                 }
-                
+
                 if (datum !== null) {
                     chatbotResponsePara.innerHTML += datum["content"]
                     if (/\s/.test(chatbotResponsePara.innerHTML.charAt(0))) {
@@ -383,7 +383,7 @@ const chatbotResponseCard = (function () {
     // API calls
     async function fetchChatbotResponseReader(question, data) {
         const bindings = data["results"]["bindings"].map(binding => Object.keys(binding).reduce((obj, k) => {
-            if (!binding[k]["value"].startsWith(TWA_ABOX_IRI_PREFIX)) {
+            if (TWA_ABOX_IRI_PREFIXES.every(prefix => !binding[k]["value"].startsWith(prefix))) {
                 obj[k] = binding[k]["value"]
             }
             return obj
@@ -431,7 +431,7 @@ const chatbotResponseCard = (function () {
     }
 })()
 
-const inputField =  (function(){
+const inputField = (function () {
     const elem = document.getElementById('input-field')
     const askButton = document.getElementById('ask-button')
 
@@ -440,7 +440,7 @@ const inputField =  (function(){
             elem.value = text
             window.scrollTo(0, 0);
         },
-    
+
         addToInputText(text) {
             const startPos = elem.selectionStart
             const endPos = elem.selectionEnd

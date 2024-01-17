@@ -7,16 +7,12 @@
             "How many schools are there?",
             "How many buildings have an energy rating of B?",
             "How many buildings have a floor area between 80 and 120 m2?",
+            "What's the average property value for buildings with a floor area between 80 and 120 m2?",
+            "What's the average property value for a 6 bedroom building?",
             "Which buildings are located in postcode PE30 2DH?",
 
             "Find me all hospitals",
-
-            "Please give me buildings with mixed residential and office use, where residential accounts for at least 65% of the building usage",
-
-            
-            "What's the ground elevation and usage of the building located at 14 GAYWOOD ROAD",
-            "Show me buildings with a ground elevation greater than 2.52 m, an energy rating of D, a market value less than 1000000 pounds",
-            "hotel with less than 400 square metres floor area"
+            "Please give me buildings with residential and office use, where residential accounts for at least 65% of the building usage"
         ]
     }
 ]

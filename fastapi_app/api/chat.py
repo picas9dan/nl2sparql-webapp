@@ -97,11 +97,11 @@ def make_chatbot_response_stream(question: str, data: str):
         content = content[:truncate_idx]
 
     return chatbot_client.chat.completions.create(
-        model="llama-2-7b-chat.Q4_K_M.gguf",
+        model="placeholder",
         messages=[
             {
                 "role": "system",
-                "content": "You are a chatbot that succinctly responds to user queries.",
+                "content": "You are a chatbot that succinctly responds to user queries based on the provided data.",
             },
             {
                 "role": "user",
