@@ -38,7 +38,8 @@ async def home(request: Request):
             request=request,
             superdomain=superdomain,
             model_version=model_version,
-            metadata=METADATA,
+            title=METADATA[superdomain]["title"],
+            subtitle_paras=METADATA[superdomain]["subtitle"].split("\n"),
             sample_questions=SAMPLE_QUESTIONS,
         ),
     )
