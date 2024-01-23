@@ -97,7 +97,7 @@
         <p>{{ question_group["description"] }}</p>
         <ul>
             {% for question in question_group["questions"] %}
-            <li class="sample-question" onclick="inputField.populateInputText('{{question}}'); askQuestion();">
+            <li class="sample-question" onclick='inputField.populateInputText("{{question}}"); askQuestion();'>
                 {{ question }}
             </li>
             {% endfor %}
